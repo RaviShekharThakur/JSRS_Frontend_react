@@ -1,18 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
-const UserForm = ({ apiUrl }) => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [age, setAge] = useState('');
-  const [address, setAddress] = useState('');
-  const [area, setArea] = useState('');
+const UserForm = ({ apiUrl, existingUser = {} }) => {
+  const [name, setName] = useState(existingUser.name || '');
+  const [email, setEmail] = useState(existingUser.email || '');
+  const [phone, setPhone] = useState(existingUser.phone || '');
+  const [age, setAge] = useState(existingUser.age || '');
+  const [address, setAddress] = useState(existingUser.address || '');
+  const [area, setArea] = useState(existingUser.area || '');
   const [image, setImage] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate();
+  const { id } = useParams();
+
+  useEffect(() => {
+    if (id) {
+      const fetchUser = async () => {
+        try {
+          const response = await fetch(`${apiUrl}/users/${id}`);
+          if (response.ok) {
+            const data = await response.json();
+            // Extract user data
+            const userData = data.data;
+            setName(userData.name);
+            setEmail(userData.email);
+            setPhone(userData.phone);
+            setAge(userData.age);
+            setAddress(userData.address);
+            setArea(userData.area);
+            setImage(userData.image_url);
+          } else {
+            console.error("Failed to fetch user data for editing.");
+          }
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        }
+      };
+      fetchUser();
+    }
+  }, [id, apiUrl]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
     const formData = new FormData();
     formData.append('user[name]', name);
     formData.append('user[email]', email);
@@ -23,16 +52,18 @@ const UserForm = ({ apiUrl }) => {
     if (image) {
       formData.append('user[image]', image);
     }
+
     try {
-      const response = await fetch(`${apiUrl}/users`, {
-        method: 'POST',
+      const response = await fetch(`${apiUrl}/users${id ? `/${id}` : ''}`, {
+        method: id ? 'PUT' : 'POST',
         body: formData,
       });
 
       if (!response.ok) {
-        throw new Error('Failed to create user');
+        throw new Error(id ? 'Failed to update user' : 'Failed to create user');
       }
-
+      
+      // Reset form and navigate back to the user list or details page
       setName('');
       setEmail('');
       setPhone('');
@@ -40,6 +71,7 @@ const UserForm = ({ apiUrl }) => {
       setAddress('');
       setArea('');
       setImage(null);
+      navigate(id ? `/users/${id}` : '/users');
     } catch (error) {
       setErrorMessage(error.message);
     }
@@ -47,79 +79,39 @@ const UserForm = ({ apiUrl }) => {
 
   return (
     <div className="container">
-      <h2 className="mt-5">Add User</h2>
+      <h2 className="mt-5">{id ? 'Edit User' : 'Add User'}</h2>
       {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label className="form-label">Name</label>
-          <input
-            type="text"
-            className="form-control"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
+          <input type="text" className="form-control" value={name} onChange={(e) => setName(e.target.value)} required />
         </div>
         <div className="mb-3">
           <label className="form-label">Email</label>
-          <input
-            type="email"
-            className="form-control"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+          <input type="email" className="form-control" value={email} onChange={(e) => setEmail(e.target.value)} required />
         </div>
         <div className="mb-3">
           <label className="form-label">Phone</label>
-          <input
-            type="tel"
-            className="form-control"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            required
-          />
+          <input type="tel" className="form-control" value={phone} onChange={(e) => setPhone(e.target.value)} required />
         </div>
         <div className="mb-3">
           <label className="form-label">Age</label>
-          <input
-            type="number"
-            className="form-control"
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
-            required
-          />
+          <input type="number" className="form-control" value={age} onChange={(e) => setAge(e.target.value)} required />
         </div>
         <div className="mb-3">
           <label className="form-label">Address</label>
-          <input
-            type="text"
-            className="form-control"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            required
-          />
+          <input type="text" className="form-control" value={address} onChange={(e) => setAddress(e.target.value)} required />
         </div>
         <div className="mb-3">
           <label className="form-label">Area</label>
-          <input
-            type="text"
-            className="form-control"
-            value={area}
-            onChange={(e) => setArea(e.target.value)}
-            required
-          />
+          <input type="text" className="form-control" value={area} onChange={(e) => setArea(e.target.value)} required />
         </div>
         <div className="mb-3">
           <label className="form-label">Upload Image</label>
-          <input
-            type="file"
-            className="form-control"
-            onChange={(e) => setImage(e.target.files[0])}
-          />
+          <input type="file" className="form-control" onChange={(e) => setImage(e.target.files[0])} />
         </div>
         <button type="submit" className="btn btn-primary">
-          Add User
+          {id ? 'Update User' : 'Add User'}
         </button>
       </form>
     </div>
@@ -127,4 +119,3 @@ const UserForm = ({ apiUrl }) => {
 };
 
 export default UserForm;
-  

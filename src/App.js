@@ -16,6 +16,7 @@ const App = () => {
           <Route path="/" element={<UserList apiUrl={API_BASE_URL} />} />
           <Route path="/add-user" element={<UserForm apiUrl={API_BASE_URL} />} />
           <Route path="/users/:id" element={<ShowUser apiUrl={API_BASE_URL} />} />
+          <Route path="/users/edit/:id" element={<UserForm apiUrl={API_BASE_URL} />} />
         </Routes>
       </div>
     </Router>

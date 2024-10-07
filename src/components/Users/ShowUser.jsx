@@ -5,6 +5,7 @@ const ShowUser = ({ apiUrl }) => {
   const { id } = useParams();
   const [user, setUser] = useState(null);
   const navigate = useNavigate()
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -29,6 +30,32 @@ const ShowUser = ({ apiUrl }) => {
   const handleList = () => {
     navigate(`/`);
   };
+
+  const deleteUser = async () => {
+    const confirmed = window.confirm("Are you sure you want to delete this user?");
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`${apiUrl}/users/${id}`, {
+        method: 'DELETE'
+      });
+      if (!response.ok) {
+        throw new Error('Failed to delete user');
+      } else {
+        console.log('User deleted successfully');
+        navigate('/');
+      }
+    } catch (error) {
+      setErrorMessage(error.message);
+    }
+  };
+
+  const handleEdit = () => {
+    navigate(`/users/edit/${id}`);
+  };
+
   return (
     <div className="container mt-5">
       <h2>User Details</h2>
@@ -44,6 +71,12 @@ const ShowUser = ({ apiUrl }) => {
               <p className="card-text">Area: {user.area}</p>
               <button onClick={() => handleList()} className="btn btn-info">
                 Back to User List
+              </button>
+              <button onClick={() => handleEdit()} className="btn btn-info">
+                Edit User
+              </button>
+              <button onClick={() => deleteUser(id)} className="btn btn-danger">
+                Delete User
               </button>
             </div>
           </div>
