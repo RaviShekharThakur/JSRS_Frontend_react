@@ -28,7 +28,7 @@ const ShowUser = ({ apiUrl }) => {
 
   if (!user) return <div>Loading...</div>;
   const handleList = () => {
-    navigate(`/`);
+    navigate(`/users`);
   };
 
   const deleteUser = async () => {
@@ -45,7 +45,7 @@ const ShowUser = ({ apiUrl }) => {
         throw new Error('Failed to delete user');
       } else {
         console.log('User deleted successfully');
-        navigate('/');
+        navigate('/users');
       }
     } catch (error) {
       setErrorMessage(error.message);
