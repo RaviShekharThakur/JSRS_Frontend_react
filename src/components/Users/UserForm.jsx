@@ -20,7 +20,6 @@ const UserForm = ({ apiUrl, existingUser = {} }) => {
           const response = await fetch(`${apiUrl}/users/${id}`);
           if (response.ok) {
             const data = await response.json();
-            // Extract user data
             const userData = data.data;
             setName(userData.name);
             setEmail(userData.email);
@@ -63,7 +62,6 @@ const UserForm = ({ apiUrl, existingUser = {} }) => {
         throw new Error(id ? 'Failed to update user' : 'Failed to create user');
       }
       
-      // Reset form and navigate back to the user list or details page
       setName('');
       setEmail('');
       setPhone('');
@@ -71,7 +69,7 @@ const UserForm = ({ apiUrl, existingUser = {} }) => {
       setAddress('');
       setArea('');
       setImage(null);
-      navigate(id ? `/users/${id}` : '/users');
+      navigate(id ? `/users/${id}` : '/');
     } catch (error) {
       setErrorMessage(error.message);
     }
