@@ -37,14 +37,19 @@
   }
 }
 
-.navbar-nav .nav-link {
-  transition: transform 0.3s ease;
-  transform: scale(1); /* Set the initial scale */
+body {
+  margin: 0;
+  padding: 0;
 }
 
-.navbar-nav .nav-link:hover {
-  transform: scale(1.1);
-  color: #f1c40f;
-  text-decoration: underline;
+.background-gif {
+  background: url('https://media.giphy.com/media/l1Et7Qw1XjvunS0Io/giphy.gif') no-repeat center center fixed;
+  background-size: cover;
+  min-height: 100vh;
 }
 
+.navbar {
+  position: relative;
+  z-index: 2;
+  background: rgba(231, 126, 34, 0.8);
+}

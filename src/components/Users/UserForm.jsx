@@ -76,42 +76,44 @@ const UserForm = ({ apiUrl, existingUser = {} }) => {
   };
 
   return (
-    <div className="container">
-      <h2 className="mt-5">{id ? 'Edit User' : 'Add User'}</h2>
-      {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label className="form-label">Name</label>
-          <input type="text" className="form-control" value={name} onChange={(e) => setName(e.target.value)} required />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Email</label>
-          <input type="email" className="form-control" value={email} onChange={(e) => setEmail(e.target.value)} required />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Phone</label>
-          <input type="tel" className="form-control" value={phone} onChange={(e) => setPhone(e.target.value)} required />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Age</label>
-          <input type="number" className="form-control" value={age} onChange={(e) => setAge(e.target.value)} required />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Address</label>
-          <input type="text" className="form-control" value={address} onChange={(e) => setAddress(e.target.value)} required />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Area</label>
-          <input type="text" className="form-control" value={area} onChange={(e) => setArea(e.target.value)} required />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Upload Image</label>
-          <input type="file" className="form-control" onChange={(e) => setImage(e.target.files[0])} />
-        </div>
-        <button type="submit" className="btn btn-primary">
-          {id ? 'Update User' : 'Add User'}
-        </button>
-      </form>
+    <div className="container mt-5">
+      <div className="card bg-dark text-white shadow p-4" style={{ borderRadius: '10px' }}>
+        <h2 className="mb-4">{id ? 'Edit User' : 'Add User'}</h2>
+        {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label className="form-label">Name</label>
+            <input type="text" className="form-control" value={name} onChange={(e) => setName(e.target.value)} required />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Email</label>
+            <input type="email" className="form-control" value={email} onChange={(e) => setEmail(e.target.value)} required />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Phone</label>
+            <input type="tel" className="form-control" value={phone} onChange={(e) => setPhone(e.target.value)} required />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Age</label>
+            <input type="number" className="form-control" value={age} onChange={(e) => setAge(e.target.value)} required />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Address</label>
+            <input type="text" className="form-control" value={address} onChange={(e) => setAddress(e.target.value)} required />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Area</label>
+            <input type="text" className="form-control" value={area} onChange={(e) => setArea(e.target.value)} required />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Upload Image</label>
+            <input type="file" className="form-control" onChange={(e) => setImage(e.target.files[0])} />
+          </div>
+          <button type="submit" className="btn btn-warning text-dark" style={{ backgroundColor: '#e67e22', border: 'none' }}>
+            {id ? 'Update User' : 'Add User'}
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

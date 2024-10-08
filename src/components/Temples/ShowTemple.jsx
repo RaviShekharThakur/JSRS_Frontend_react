@@ -56,9 +56,9 @@ const ShowTemple = ({ apiUrl }) => {
 
   return (
     <div className="container mt-5">
-      <h2>Temple Details</h2>
+      <h2 className="text-white">Temple Details</h2>
       {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
-      <div className="card mb-4">
+      <div className="card bg-dark text-white mb-4">
         <div className="row g-0">
           <div className="col-md-8">
             <div className="card-body">
@@ -72,7 +72,7 @@ const ShowTemple = ({ apiUrl }) => {
               <button onClick={handleList} className="btn btn-info me-2">
                 Back to Temple List
               </button>
-              <button onClick={handleEdit} className="btn btn-primary me-2">
+              <button onClick={handleEdit} className="btn btn-warning text-dark" style={{ backgroundColor: '#e67e22', border: 'none' }}>
                 Edit Temple
               </button>
               <button onClick={deleteTemple} className="btn btn-danger">
