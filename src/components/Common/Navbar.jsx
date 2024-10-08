@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light "style={{ backgroundColor: '#e67e22' }}>
+    <nav 
+      className="navbar navbar-expand-lg navbar-light" 
+      style={{ background: 'linear-gradient(45deg, #e67e22, #d35400)' }}
+    >
       <div className="container-fluid">
         <Link className="navbar-brand text-white" to="/">JSRS Indore</Link>
         <button

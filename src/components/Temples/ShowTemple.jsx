@@ -90,7 +90,7 @@ const ShowTemple = ({ apiUrl }) => {
                         src={imageUrl}
                         className="d-block w-100"
                         alt={`${temple.name} image ${index + 1}`}
-                        style={{ height: 'auto' }}
+                        style={{ height: '50vh', objectFit: 'cover' }}
                       />
                     </div>
                   ))}

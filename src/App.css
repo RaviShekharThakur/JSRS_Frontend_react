@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+.navbar-nav .nav-link {
+  transition: transform 0.3s ease;
+  transform: scale(1); /* Set the initial scale */
+}
+
+.navbar-nav .nav-link:hover {
+  transform: scale(1.1);
+  color: #f1c40f;
+  text-decoration: underline;
+}
+
